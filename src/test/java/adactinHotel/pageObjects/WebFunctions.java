@@ -1,10 +1,14 @@
 package adactinHotel.pageObjects;
 
+import adactinHotel.webPageObjects.BookHotelPage;
 import adactinHotel.webPageObjects.LoginPage;
 import adactinHotel.webPageObjects.SearchHotelPage;
+import adactinHotel.webPageObjects.SelectHotelPage;
 import adactinHotel.webUtils.CustomExceptions;
+import adactinHotel.webUtils.FileGenerator;
 import adactinHotel.webUtils.WebActions;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class WebFunctions extends WebActions {
 
@@ -29,7 +33,7 @@ public class WebFunctions extends WebActions {
     }
 
     public void searchHotel(WebDriver driver, String Location, String Hotels, String RoomType, String NumberOfRooms, String CheckInDate, String CheckOutDate,
-                            String AdultPerRoom, String ChildrenPerRoom){
+                            String AdultsPerRoom, String ChildrenPerRoom){
 
         SearchHotelPage searchHotelPage = new SearchHotelPage(driver);
 
@@ -42,14 +46,58 @@ public class WebFunctions extends WebActions {
             selectObjects(searchHotelPage.numberOfRooms, driver, "SELECTBYVISIBLETEXT", NumberOfRooms);
             passObjects(searchHotelPage.checkInDate, driver, CheckInDate);
             passObjects(searchHotelPage.checkOutDate, driver, CheckOutDate);
-            selectObjects(searchHotelPage.adultPerRoom, driver, "SELECTBYVISIBLETEXT", AdultPerRoom);
+            selectObjects(searchHotelPage.adultPerRoom, driver, "SELECTBYVISIBLETEXT", AdultsPerRoom);
             selectObjects(searchHotelPage.childrenPerRoom, driver, "SELECTBYVISIBLETEXT", ChildrenPerRoom);
 
             clickObjects(searchHotelPage.searchBtn, driver);
 
-
         } catch (Exception e) {
             handleException("searchHotel", e);
+        }
+    }
+
+    public void selectHotel(WebDriver driver){
+
+        SelectHotelPage selectHotelPage = new SelectHotelPage(driver);
+
+        try{
+
+            clickObjects(selectHotelPage.selectHotelRadioBtn, driver);
+            clickObjects(selectHotelPage.continueBtn, driver);
+
+        } catch (Exception e) {
+            handleException("selectHotel", e);
+        }
+    }
+
+    public void bookHotel(WebDriver driver, String FirstName, String LastName, String BillingAddress, String CreditCardNo, String CreditCardType,
+                          String ExpMonth, String ExpYear, String CVV){
+
+        BookHotelPage bookHotelPage = new BookHotelPage(driver);
+        FileGenerator generator = new FileGenerator();
+
+        try{
+
+            passObjects(bookHotelPage.firstName, driver, FirstName);
+            passObjects(bookHotelPage.lastName, driver, LastName);
+            passObjects(bookHotelPage.billingAddress, driver, BillingAddress);
+            passObjects(bookHotelPage.creditCardNumber, driver, CreditCardNo);
+            selectObjects(bookHotelPage.creditCardType, driver, "SELECTBYVISIBLETEXT", CreditCardType);
+            selectObjects(bookHotelPage.expMonth, driver, "SELECTBYVISIBLETEXT", ExpMonth);
+            selectObjects(bookHotelPage.expYear, driver, "SELECTBYVISIBLETEXT", ExpYear);
+            passObjects(bookHotelPage.cvvNumber, driver, CVV);
+
+            clickObjects(bookHotelPage.bookNowBtn, driver);
+
+            //add dynamic wait
+
+            WebElement orderNumber = bookHotelPage.orderNumberCreated;
+            String _orderNumber = orderNumber.getAttribute("value");
+            generator.writeToFile(_orderNumber);
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

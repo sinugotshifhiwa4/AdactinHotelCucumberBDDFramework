@@ -48,9 +48,7 @@ public class BookHotelStepDefinitions {
                 functions.logIn(webUtilities.getDriver(),
                         loginData.get("Username"),
                         loginData.get("Password"));
-
             }
-
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -68,19 +66,68 @@ public class BookHotelStepDefinitions {
     // Common steps for all scenarios
     @Given("User is on the search hotel page")
     public void userIsOnTheSearchHotelPage() {
+        System.out.println("------Welcome to Search Hotel Page------");
     }
 
     // Book Hotel Successfully scenario
     @When("User fills in all required information and clicks the search button")
     public void userFillsInAllRequiredInformationAndClicksTheSearchButton() {
+
+        final String searchHotelSheet = "SearchHotel";
+
+        List<Map<String, String>> searchHotelInformation = excelUtility.readExcelData(excelPath, searchHotelSheet);
+
+        try{
+
+            for (Map<String, String> searchHotelData : searchHotelInformation){
+
+                functions.searchHotel(webUtilities.getDriver(),
+                        searchHotelData.get("Location"),
+                        searchHotelData.get("Hotels"),
+                        searchHotelData.get("RoomType"),
+                        searchHotelData.get("NumberOfRooms"),
+                        searchHotelData.get("CheckInDate"),
+                        searchHotelData.get("CheckOutDate"),
+                        searchHotelData.get("AdultsPerRoom"),
+                        searchHotelData.get("ChildrenPerRoom"));
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @And("user selects a hotel and clicks the continue button")
     public void userSelectsAHotelAndClicksTheContinueButton() {
+
+        functions.selectHotel(webUtilities.getDriver());
     }
 
     @And("User enters all required billing information and clicks the book now button")
     public void userEntersAllRequiredBillingInformationAndClicksTheBookNowButton() {
+
+        final String billingInformationSheet = "BillingInformation";
+
+        List<Map<String, String>> billingInformation = excelUtility.readExcelData(excelPath, billingInformationSheet);
+
+        try{
+
+            for(Map<String, String> billingInformationData : billingInformation){
+
+                functions.bookHotel(webUtilities.getDriver(),
+                        billingInformationData.get("FirstName"),
+                        billingInformationData.get("LastName"),
+                        billingInformationData.get("BillingAddress"),
+                        billingInformationData.get("CreditCardNumber"),
+                        billingInformationData.get("CreditCardType"),
+                        billingInformationData.get("ExpiryMonth"),
+                        billingInformationData.get("ExpiryYear"),
+                        billingInformationData.get("CVV"));
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Then("User successfully books a hotel, and an order number is generated")
