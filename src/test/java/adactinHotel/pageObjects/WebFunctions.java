@@ -90,11 +90,23 @@ public class WebFunctions extends WebActions {
             clickObjects(bookHotelPage.bookNowBtn, driver);
 
             //add dynamic wait
+            webDriverWait(bookHotelPage.orderNumberCreated, driver);
 
+            //write order number generated to file
             WebElement orderNumber = bookHotelPage.orderNumberCreated;
-            String _orderNumber = orderNumber.getAttribute("value");
-            generator.writeToFile(_orderNumber);
 
+            if(orderNumber != null){
+
+                try {
+                    String _OrderNumber = orderNumber.getAttribute("value");
+                    generator.writeToFile(_OrderNumber);
+                } catch (Exception e) {
+                    System.out.println("Exception while getting order number value: " + e.getMessage());
+                }
+
+            } else {
+                System.out.println("Order number WebElement is null. Cannot extract and write to file.");
+            }
 
         } catch (Exception e) {
             throw new RuntimeException(e);

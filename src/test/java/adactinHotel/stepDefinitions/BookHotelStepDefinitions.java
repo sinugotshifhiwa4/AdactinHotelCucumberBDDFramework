@@ -132,6 +132,7 @@ public class BookHotelStepDefinitions {
 
     @Then("User successfully books a hotel, and an order number is generated")
     public void userSuccessfullyBooksAHotelAndAnOrderNumberIsGenerated() {
+        System.out.println("------Welcome to Booking Confirmation Page, Order Number is Successfully Generated------");
     }
 
     // Delete existing booking scenario
