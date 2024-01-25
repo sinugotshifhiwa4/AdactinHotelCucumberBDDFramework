@@ -23,9 +23,9 @@
                     <version>3.2.5</version>
                     <configuration>
                         <!-- put your configurations here -->
-                        <suiteXmlFiles>
-                            <suiteXmlFile><!-- Specify path to TestNG XML file --></suiteXmlFile>
-                        </suiteXmlFiles>
+<!--                        <suiteXmlFiles>-->
+<!--                            <suiteXmlFile>&lt;!&ndash; Specify path to TestNG XML file &ndash;&gt;</suiteXmlFile>-->
+<!--                        </suiteXmlFiles>-->
                     </configuration>
                 </plugin>
 
@@ -129,6 +129,13 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.22.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>4.1.5</version>
         </dependency>
 
     </dependencies>

@@ -3,6 +3,8 @@ package adactinHotel.stepDefinitions;
 import adactinHotel.pageObjects.WebFunctions;
 import adactinHotel.webUtils.ExcelUtility;
 import adactinHotel.webUtils.WebUtilities;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,6 +19,7 @@ public class BookHotelStepDefinitions {
     WebUtilities webUtilities;
     WebFunctions functions;
     ExcelUtility excelUtility;
+    private ExtentTest node;
     final String excelPath = ".//testData//TestData.xlsx";
 
     public BookHotelStepDefinitions(){
@@ -31,7 +34,8 @@ public class BookHotelStepDefinitions {
     // Common steps for multiple scenarios
     @Given("User is on the login page")
     public void userIsOnTheLoginPage() {
-        System.out.println("------Welcome to Login Page------");
+        node = BaseStepDefinitions.getExtentReports().createTest("User is on login page");
+        node.info("Welcome to Login Page");
     }
 
     @When("User enters username and password and clicks the login button")
@@ -49,12 +53,11 @@ public class BookHotelStepDefinitions {
                         loginData.get("Username"),
                         loginData.get("Password"));
             }
-
+            node.pass("Login successful");
         } catch (Exception e) {
+            node.fail("Failed to log in");
             throw new RuntimeException(e);
         }
-
-
     }
 
     @Then("User is navigated to the search hotel page")
