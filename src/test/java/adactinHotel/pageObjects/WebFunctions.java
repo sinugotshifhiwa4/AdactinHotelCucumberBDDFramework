@@ -1,12 +1,10 @@
 package adactinHotel.pageObjects;
 
-import adactinHotel.webPageObjects.BookHotelPage;
-import adactinHotel.webPageObjects.LoginPage;
-import adactinHotel.webPageObjects.SearchHotelPage;
-import adactinHotel.webPageObjects.SelectHotelPage;
+import adactinHotel.webPageObjects.*;
 import adactinHotel.webUtils.CustomExceptions;
 import adactinHotel.webUtils.FileGenerator;
 import adactinHotel.webUtils.WebActions;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -110,6 +108,59 @@ public class WebFunctions extends WebActions {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void bookedItinerary(WebDriver driver){
+
+        BookedItineraryPage bookedItineraryPage = new BookedItineraryPage(driver);
+
+        try{
+            clickObjects(bookedItineraryPage.bookedItineraryTab, driver);
+            Thread.sleep(2000);
+
+        } catch (Exception e) {
+            handleException("bookedItinerary", e);
+        }
+    }
+
+    public void searchOrder(WebDriver driver){
+
+        SearchOrderPage searchOrderPage = new SearchOrderPage(driver);
+        FileGenerator generator = new FileGenerator();
+
+        String orderNumber = generator.readFromFile();
+
+        try{
+            passObjects(searchOrderPage.searchOrderIdTextBox, driver, orderNumber);
+            Thread.sleep(2000);
+            clickObjects(searchOrderPage.goBtn, driver);
+
+        } catch (Exception e) {
+            handleException("searchOrder", e);
+        }
+    }
+
+    public void cancelBooking(WebDriver driver){
+
+        CancelBookingPage cancelBookingPage = new CancelBookingPage(driver);
+
+        try{
+            //dynamic wait
+            webDriverWait(cancelBookingPage.selectRadioBtn, driver);
+
+            clickObjects(cancelBookingPage.selectRadioBtn, driver);
+            Thread.sleep(2000);
+            clickObjects(cancelBookingPage.cancelSelectedBtn, driver);
+
+
+            //Alert to accept
+            Alert alert = driver.switchTo().alert();
+            Thread.sleep(2000);
+            alert.accept();
+
+        } catch (Exception e) {
+            handleException("cancelBooking", e);
         }
     }
 }

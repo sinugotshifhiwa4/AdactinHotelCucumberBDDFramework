@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         features = {"src/test/java/adactinHotel/features"},
         glue = {"adactinHotel.stepDefinitions"},
         plugin = {"pretty", "html:target/cucumber-reports"},
-        tags = "@bookHotelSuccessfully",
+        tags = "@bookHotelSuccessfully or @deleteBooking or @confirmDeletedBooking",
         monochrome = true
 )
 

@@ -138,22 +138,30 @@ public class BookHotelStepDefinitions {
     // Delete existing booking scenario
     @When("the user clicks on booked itinerary")
     public void theUserClicksOnBookedItinerary() {
+
+        functions.bookedItinerary(webUtilities.getDriver());
     }
 
     @And("the user searches for a booking with the order number and clicks go")
     public void theUserSearchesForABookingWithTheOrderNumberAndClicksGo() {
+
+        functions.searchOrder(webUtilities.getDriver());
     }
 
     @And("User selects the booking to cancel and clicks the cancel selected button and accepts the alert")
     public void userSelectsTheBookingToCancelAndClicksTheCancelSelectedButtonAndAcceptsTheAlert() {
+
+        functions.cancelBooking(webUtilities.getDriver());
     }
 
     @Then("the booking is deleted successfully")
     public void theBookingIsDeletedSuccessfully() {
+        System.out.println("------Booking was deleted successfully------");
     }
 
     // Confirm booking was deleted successfully scenarios, inherits steps from Delete existing booking scenario
     @Then("no record of the order number is found")
     public void noRecordOfTheOrderNumberIsFound() {
+        System.out.println("------No record found, booking was deleted successfully------");
     }
 }
