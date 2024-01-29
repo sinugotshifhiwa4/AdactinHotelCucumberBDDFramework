@@ -4,6 +4,8 @@ import adactinHotel.webPageObjects.*;
 import adactinHotel.webUtils.CustomExceptions;
 import adactinHotel.webUtils.FileGenerator;
 import adactinHotel.webUtils.WebActions;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -161,6 +163,23 @@ public class WebFunctions extends WebActions {
 
         } catch (Exception e) {
             handleException("cancelBooking", e);
+        }
+    }
+
+    public void logOut(WebDriver driver){
+
+        LogoutPage logoutPage = new LogoutPage(driver);
+
+        try{
+            Thread.sleep(2000);
+            clickObjects(logoutPage.logout, driver);
+            Thread.sleep(2000);
+            clickObjects(logoutPage.linkToGoLoginPage, driver);
+
+            Thread.sleep(2000);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
