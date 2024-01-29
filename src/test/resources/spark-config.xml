@@ -38,14 +38,5 @@
             ]]>
         </styles>
 
-        <!-- system information -->
-        <systemInfo>
-            <property key="os" value="Windows" />
-            <property key="Tester" value="Tshifhiwa Sinugo" />
-            <property key="project" value="AdactinHotelCucumberBDDFramework" />
-            <property key="browser" value="Google Chrome" />
-            <!-- add more properties as needed -->
-        </systemInfo>
-
     </configuration>
 </extentreports>
